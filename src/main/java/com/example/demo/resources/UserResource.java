@@ -41,7 +41,13 @@ public class UserResource {
                         .path("/{id}")
                         .buildAndExpand(user.getId())
                         .toUri();
-        service.insert(user);
+        user = service.insert(user);
         return ResponseEntity.created(uri).body(user);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
