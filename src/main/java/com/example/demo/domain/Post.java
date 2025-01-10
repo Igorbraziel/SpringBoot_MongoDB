@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.dto.AuthorDTO;
+import com.example.demo.dto.CommentDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,7 +24,7 @@ public class Post implements Serializable {
     private String body;
 
     private AuthorDTO author;
-    private List<Comment> comments = new ArrayList<>();
+    private List<CommentDTO> comments = new ArrayList<>();
 
     public Post(){}
 
@@ -75,7 +76,7 @@ public class Post implements Serializable {
         this.author = author;
     }
 
-    public List<Comment> getComments(){
+    public List<CommentDTO> getComments(){
         return comments;
     }
 
