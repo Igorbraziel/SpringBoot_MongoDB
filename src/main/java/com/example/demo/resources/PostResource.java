@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,19 @@ public class PostResource {
     public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text){
         String decodedText = URL.decodeParam(text);
         List<Post> posts = service.findByTitle(decodedText);
+        return ResponseEntity.ok().body(posts);
+    }
+
+    @GetMapping(value = "fullsearch")
+    public ResponseEntity<List<Post>> fullSearch(
+            @RequestParam(value = "text", defaultValue = "") String text,
+            @RequestParam(value = "minDate", defaultValue = "") String minDateText,
+            @RequestParam(value = "maxDate", defaultValue = "") String maxDateText
+    ){
+        text = URL.decodeParam(text);
+        Instant minDate = URL.convertDate(minDateText, Instant.EPOCH);
+        Instant maxDate = URL.convertDate(maxDateText, Instant.now().plus(1, ChronoUnit.DAYS));
+        List<Post> posts = service.fullSearch(text, minDate, maxDate);
         return ResponseEntity.ok().body(posts);
     }
 }

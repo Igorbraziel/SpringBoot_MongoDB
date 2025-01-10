@@ -6,6 +6,7 @@ import com.example.demo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +22,9 @@ public class PostService {
 
     public List<Post> findByTitle(String text){
         return repository.searchTitle(text);
+    }
+
+    public List<Post> fullSearch(String text, Instant minDate, Instant maxDate){
+        return repository.fullSearch(text, minDate, maxDate);
     }
 }
